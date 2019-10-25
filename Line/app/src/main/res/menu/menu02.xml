@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_editMessage"
+        android:title="編輯訊息"
+        />
+    <item
+        android:id="@+id/item_sort"
+        android:title = "聊天室排序"
+        />
+    <item
+        android:id="@+id/item_unread"
+        android:title="全部標記為已讀"
+        />
+    <item
+        android:id="@+id/item_group"
+        android:title="創建群組"
+        android:icon="@drawable/speaker_notes"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/item_search"
+        android:title="搜尋"
+        android:icon="@drawable/search"
+        app:showAsAction="always"
+        />
+
+
+
+</menu>

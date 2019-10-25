@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button android:id="@+id/btn_prev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="上一張"
+        android:textSize="30dp"/>
+    <Button android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_prev"
+        android:text="下一張"
+        android:textSize="30dp"/>
+    <ImageView android:id="@+id/img_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_next"
+        android:src="@drawable/image01"
+        android:scaleType="fitCenter"/>
+
+
+
+</RelativeLayout>

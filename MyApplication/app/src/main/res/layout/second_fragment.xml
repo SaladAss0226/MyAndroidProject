@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgv_quei_background"
+        android:layout_width="640dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="-40dp"
+        android:alpha="0.6" />
+
+    <LinearLayout
+        android:id="@+id/layout_quei_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgv_quei01"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity=""
+            android:layout_weight="1"
+            android:background="@drawable/quei_shape"
+            android:clickable="true"
+            android:rotation="5"
+            android:scaleType="centerInside" />
+
+        <ImageView
+            android:id="@+id/imgv_quei02"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity=""
+            android:layout_weight="1"
+            android:background="@drawable/quei_shape"
+            android:rotation="5"
+            android:scaleType="centerInside" />
+
+
+        <ImageView
+            android:id="@+id/imgv_quei03"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity=""
+            android:layout_weight="1"
+            android:background="@drawable/quei_shape"
+            android:rotation="5"
+            android:scaleType="centerInside" />
+
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Courage and resolution \nare the spirit and soul \nof virtue."
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Each man is the \narchitect of his own fate. "
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.58" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Life is a pure flame,\nand we live by an \ninvisible sun within us."
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</FrameLayout>

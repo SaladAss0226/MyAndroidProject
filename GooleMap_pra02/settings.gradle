@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name='GooleMap_pra02'
