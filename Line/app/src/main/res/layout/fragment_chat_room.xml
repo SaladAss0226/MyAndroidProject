@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FragmentChatRoom"
+    android:background="@drawable/line_chatroom_background">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar_chatroom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="#ffffff"
+        app:navigationIcon="@drawable/leftback"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_chatroom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolBar_chatroom">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/add_black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:alpha="0.6"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/camera_black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:alpha="0.6"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/insert_photo_black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:alpha="0.6"/>
+        <EditText
+            android:id="@+id/et_user_input"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="50"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            android:textSize="16sp"
+            android:background="@drawable/chatroom_editext_shape"/>
+        <ImageView
+            android:id="@+id/btn_sendMsg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/send_black"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:alpha="0.6"
+            android:clickable="true"/>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

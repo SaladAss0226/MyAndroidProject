@@ -27,7 +27,7 @@
 
     <!--用來當刪除頁面那個fragment的容器-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLay_deletePage"
+        android:id="@+id/constraintLay_fullScreen"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu01">
+        app:menu="@menu/menu_navigationbar">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

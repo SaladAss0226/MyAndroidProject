@@ -2,39 +2,44 @@ package com.example.line
 
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.SpinnerAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.line.MainActivity.Companion.fragmentDeletePage
+import com.example.line.MainActivity.Companion.fragmentSearch
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.f2.*
+import kotlinx.android.synthetic.main.f2.recyclerView
 import kotlinx.android.synthetic.main.f2.view.*
+import kotlinx.android.synthetic.main.fragment_chat_room.*
 
 class FragmentChat : Fragment() {
+    companion object{
+        var bigHeadPhoto:Int = 0
+    }
 
-    val adapter = ChatAdapter()     //這邊要建立一個adapter實體 後面需要用到ChatAdapter裡的方法的時候才能呼叫
+    val chatAdapter = ChatAdapter()     //這邊要建立一個adapter實體 後面需要用到ChatAdapter裡的方法的時候才能呼叫
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        //setHasOptionsMenu(true)    //若是使用onCreateOptionsMenu來載入menu 要記得加這行你的menu才會出來
         val view = inflater.inflate(R.layout.f2, container, false)
-        
-        setHasOptionsMenu(true)    //要記得加這行你的menu才會出來啦
 
 
         //此方法為隱藏原本預設的actionBar 自己設一個toolBar放上去
-        view.toolBar.inflateMenu(R.menu.menu02)
+        view.toolBar.inflateMenu(R.menu.menu02)                         //把menu綁定至toolBar
+        if(activity is AppCompatActivity)
+            (activity as AppCompatActivity).setSupportActionBar(toolBar)   //把自訂的toolBar設為ActionBar
 
         view.toolBar.setOnMenuItemClickListener{
             when (it.itemId) {
                 R.id.item_editMessage -> showEditPage()
-                R.id.item_sort  -> itemListSort(adapter)
-                R.id.item_unread -> setRead(adapter)
+                R.id.item_sort  -> itemListSort()
+                R.id.item_unread -> setRead()
+                R.id.item_search -> showSearchPage()
             }
             true
         }
@@ -42,8 +47,7 @@ class FragmentChat : Fragment() {
 
     }
 
-
-       //此方法為 單純把menu導入進來放在actionBar上
+    //此方法為 單純把menu導入進來放在actionBar上
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
 //           inflater.inflate(R.menu.menu02,menu)
@@ -61,28 +65,51 @@ class FragmentChat : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
+//        activity.navigationView?.visibility = View.VISIBLE               //把navigationView設回顯示狀態
+
         //連接recyclerView
-        val LL = LinearLayoutManager(context)
-        LL.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = LL
-        recyclerView.adapter = adapter
+        //val LL = LinearLayoutManager(context)
+        //LL.orientation = LinearLayoutManager.VERTICAL    //預設就是vertical 此行可以省略
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = chatAdapter
+
+
+        //override item們的點擊事件(進入聊天室)
+        chatAdapter.setToClick(object :ChatAdapter.mItemClickListener{
+            override fun toClick(items: item) {
+                
+                val transaction = fragmentManager?.beginTransaction()
+                transaction?.replace(R.id.constraintLay_fullScreen, FragmentChatRoom.newInstance(items.namee))?.addToBackStack(null)?.commit()
+
+                ChatroomAdapter.waitingForMsgList = items.messageList      //把指定的人的messagelist指定給adapter裡的list去產生recyclerView
+                bigHeadPhoto = items.imgg
+
+                val mainActivity = activity
+                mainActivity?.navigationView?.visibility = View.INVISIBLE
+
+            }
+        })
+
+
+
+
+
     }
 
 
-    private fun setRead(adapter: ChatAdapter) {
+    private fun setRead() {
         AlertDialog.Builder(context!!)
             .setMessage("要將所有訊息標為已讀嗎?")
             .setNeutralButton("取消") { _, _ ->
             }
             .setPositiveButton("標為已讀") { _, _ ->
-                for (i in 0 until Data.itemList.size) {
-                    Data.itemList[i].unreadd = 0
-                }
-                adapter.notifyDataSetChanged()
+                Data.itemList.forEach { it.unreadd = 0 }       //forEach迴圈會走訪list中每一個元素
+                chatAdapter.notifyDataSetChanged()
             }.show()
     }
 
-        private fun itemListSort(adapter: ChatAdapter) {
+        private fun itemListSort() {
             val list = arrayOf("收到的時間", "未讀訊息")
 
             var position = 0
@@ -96,11 +123,11 @@ class FragmentChat : Fragment() {
                     if (position == 0) {
                         //先排時間先後 再排未讀訊息
                         Data.itemList.sortWith(compareBy({ it.messageTime }, { it.unreadd }))
-                        adapter.notifyDataSetChanged()
+                        chatAdapter.notifyDataSetChanged()
                     } else {
                         //先排未讀訊息 再排時間先後
                         Data.itemList.sortWith(compareBy({ it.unreadd }, { it.messageTime }))
-                        adapter.notifyDataSetChanged()
+                        chatAdapter.notifyDataSetChanged()
                     }
 
                 }.show()
@@ -109,15 +136,22 @@ class FragmentChat : Fragment() {
         private fun showEditPage() {
             //跳轉Fragment至FragmentDeletePage
             val manager = fragmentManager
-            val ft: FragmentTransaction? = manager?.beginTransaction()
-            ft?.replace(R.id.constraintLay_deletePage, FragmentDeletePage())?.commit()
+            val fragmentTransaction: FragmentTransaction? = manager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.constraintLay_fullScreen, fragmentDeletePage)?.addToBackStack(null)?.commit()
 
             val mainActivity = activity                          //取得當前fragment所依附的activity
-            mainActivity?.constraintLay_deletePage?.visibility = View.VISIBLE        //把刪除頁面設回顯示狀態
-            mainActivity?.constraintLay?.visibility =
-                View.INVISIBLE                //把其他fragment用的container設為隱藏
-            mainActivity?.navigationView?.visibility =
-                View.INVISIBLE               //把navigationView設為隱藏
+            mainActivity?.navigationView?.visibility = View.INVISIBLE               //把navigationView設為隱藏
         }
+
+    private fun showSearchPage() {
+        val manager = fragmentManager
+        val fragmentTransaction: FragmentTransaction? = manager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.constraintLay_fullScreen,fragmentSearch)?.addToBackStack(null)?.commit()
+
+        val mainActivity = activity                          //取得當前fragment所依附的activity
+        mainActivity?.navigationView?.visibility = View.INVISIBLE               //把navigationView設為隱藏
+
+
+    }
 
     }

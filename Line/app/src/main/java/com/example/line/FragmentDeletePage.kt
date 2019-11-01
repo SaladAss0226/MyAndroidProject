@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.f2_copy.*
-import kotlinx.android.synthetic.main.f2_copy.view.*
+import kotlinx.android.synthetic.main.f2_copy.toolBar
 
 class FragmentDeletePage: Fragment(){
 
@@ -17,6 +18,8 @@ class FragmentDeletePage: Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.f2_copy,container,false)
+        if(activity is AppCompatActivity)
+            (activity as AppCompatActivity).setSupportActionBar(toolBar)   //把自訂的toolBar設為ActionBar
         return view
     }
 
@@ -40,36 +43,19 @@ class FragmentDeletePage: Fragment(){
 
         //設定返回鍵點擊事件
         toolBar.setNavigationOnClickListener {
-            //跳轉回Fra02
-            //addtobackstack
-            val manager  = fragmentManager      //建立一個fragmentManager物件
-            val ft : FragmentTransaction? = manager?.beginTransaction()
-            ft?.replace(R.id.constraintLay,FragmentChat())?.commit()
-            ft?.addToBackStack(null)                         //回到上一個fragment 也就是不會再產生一個新的fragment
 
-            val mainActivity = activity                          //取得當前fragment所依附的activity
-            mainActivity?.constraintLay?.visibility = View.VISIBLE                   //把constraintLay設回顯示狀態
-            mainActivity?.constraintLay_deletePage?.visibility = View.INVISIBLE      //把刪除頁面設為隱藏
-            mainActivity?.navigationView?.visibility = View.VISIBLE               //把navigationView設回顯示狀態
-
+            activity!!.navigationView?.visibility = View.VISIBLE               //把navigationView設回顯示狀態
+            activity!!.onBackPressed()                                          //返回前一個fragment
         }
 
         //刪除鈕點擊事件
         btn_delete.setOnClickListener {
             val ii = Data.itemList.filter { it.isSelect }   //挑出itemList中屬性isSelect為true的item
-            Data.itemList.removeAll(ii)                               //刪掉itemList中的這些item
+            Data.itemList.removeAll(ii)                                //刪掉itemList中的這些item
             deletePageAdapter.notifyDataSetChanged()
 
-            //跳轉回Fra02
-            val manager  = fragmentManager
-            val ft : FragmentTransaction? = manager?.beginTransaction()
-            ft?.replace(R.id.constraintLay,FragmentChat())?.commit()
-            ft?.addToBackStack(null)
-
-            val mainActivity = activity                          //取得當前fragment所依附的activity
-            mainActivity?.constraintLay?.visibility = View.VISIBLE                   //把constraintLay設回顯示狀態
-            mainActivity?.constraintLay_deletePage?.visibility = View.INVISIBLE      //把刪除頁面設為隱藏
-            mainActivity?.navigationView?.visibility = View.VISIBLE               //把navigationView設回顯示狀態
+            activity!!.navigationView?.visibility = View.VISIBLE               //把navigationView設回顯示狀態
+            activity!!.onBackPressed()                                          //返回前一個fragment
 
         }
 

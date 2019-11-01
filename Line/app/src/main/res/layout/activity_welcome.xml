@@ -7,8 +7,9 @@
     tools:context=".WelcomeActivity">
 
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="850dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:src="@drawable/line"
 
         app:layout_constraintStart_toStartOf="parent"

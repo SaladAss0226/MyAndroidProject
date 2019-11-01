@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_chatroom01"
+        android:title="創建群組"
+        android:icon="@drawable/call_white"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/item_chatroom02"
+        android:title="創建群組"
+        android:icon="@drawable/assignment_white"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/item_chatroom03"
+        android:title="搜尋"
+        android:icon="@drawable/expand_more_white"
+        app:showAsAction="always"
+        />
+</menu>
