@@ -78,12 +78,16 @@ class FragmentChat : Fragment() {
         //override item們的點擊事件(進入聊天室)
         chatAdapter.setToClick(object :ChatAdapter.mItemClickListener{
             override fun toClick(items: item) {
-                
+
                 val transaction = fragmentManager?.beginTransaction()
                 transaction?.replace(R.id.constraintLay_fullScreen, FragmentChatRoom.newInstance(items.namee))?.addToBackStack(null)?.commit()
+                                                                               //把聊天對象的名稱夾帶過去fragmentChatroom
 
-                ChatroomAdapter.waitingForMsgList = items.messageList      //把指定的人的messagelist指定給adapter裡的list去產生recyclerView
-                bigHeadPhoto = items.imgg
+                ChatroomAdapter.waitingForMsgList = items.messageList      //把指定對象的messagelist指定給adapter裡的list去產生recyclerView
+                                                                           //(也就是根據點擊不同對象 會產生各自獨立的聊天室 並會記錄各自的聊天紀錄
+                bigHeadPhoto = items.imgg                                  //設定聊天室中聊天對象的大頭照
+                items.unreadd = 0                                         //設為已讀
+                chatAdapter.notifyDataSetChanged()
 
                 val mainActivity = activity
                 mainActivity?.navigationView?.visibility = View.INVISIBLE

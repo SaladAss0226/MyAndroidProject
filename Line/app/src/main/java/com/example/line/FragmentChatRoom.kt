@@ -17,6 +17,7 @@ import kotlin.random.Random
 class FragmentChatRoom : Fragment() {
 
     private var toolBarTitle: String? = null
+    val chatroomAdapter = ChatroomAdapter()
 
     companion object {
         fun newInstance(param1: String) =
@@ -34,7 +35,7 @@ class FragmentChatRoom : Fragment() {
         }
     }
 
-    val chatroomAdapter = ChatroomAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,16 +58,14 @@ class FragmentChatRoom : Fragment() {
 
         toolBar_chatroom.title = toolBarTitle
 
-
-
         recyclerView_chatroom.layoutManager = LinearLayoutManager(context)
         recyclerView_chatroom.adapter = chatroomAdapter
 
-        //當按下send鍵  產生對話的資料來源
+        //當按下send鍵  開始生成對話的資料來源list
         btn_sendMsg.setOnClickListener {
             val randomMsg = MessageData.msgList[Random.nextInt(MessageData.msgList.size)]     //隨機產生機器人字串
 
-            waitingForMsgList.add( Msgdata(1, et_user_input.text.toString(),0)  )   //FROM=1代表user 把輸入的字加入list
+            waitingForMsgList.add(Msgdata(1, et_user_input.text.toString(),0)  )   //FROM=1代表user 把輸入的字加入list
             waitingForMsgList.add(Msgdata(2, randomMsg,FragmentChat.bigHeadPhoto))       //FROM=2代表bot 把隨機產生的句子 以及fragmentChat傳過來的[指定對象大頭照]加入list
             chatroomAdapter.notifyDataSetChanged()
             recyclerView_chatroom.smoothScrollToPosition(waitingForMsgList.size-1)      //送出訊息時頁面自動滾動到最下面 增加使用者體驗
